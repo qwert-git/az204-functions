@@ -9,9 +9,15 @@ namespace ImageResizeFunction
     public class ImageResizeBlobTrigger
     {
         [FunctionName("ImageResizeBlobTrigger")]
-        public void Run([BlobTrigger("images/{name}", Connection = "az204tryblobtrigger323_STORAGE")]Stream myBlob, string name, ILogger log)
+        public void Run(
+            [BlobTrigger("images/{name}", Connection = "az204tryblobtrigger323_STORAGE")] Stream sourceStream,
+            [Blob("images-sm/{name}", FileAccess.Write)] Stream destinationStream,
+            string name,
+            ILogger log)
         {
-            log.LogInformation($"C# Blob trigger function Processed blob\n Name:{name} \n Size: {myBlob.Length} Bytes");
+            log.LogInformation($"C# Blob trigger function Processed blob\n Name:{name} \n Size: {sourceStream.Length} Bytes");
+
+            sourceStream.CopyTo(destinationStream);
         }
     }
 }
