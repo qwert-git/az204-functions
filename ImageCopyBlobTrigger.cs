@@ -4,11 +4,11 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
 
-namespace ImageResizeFunction
+namespace ImageCopyFunction
 {
-    public class ImageResizeBlobTrigger
+    public class ImageCopyBlobTrigger
     {
-        [FunctionName("ImageResizeBlobTrigger")]
+        [FunctionName("ImageCopyBlobTrigger")]
         public void Run(
             [BlobTrigger("images/{name}", Connection = "az204tryblobtrigger323_STORAGE")] Stream sourceStream,
             [Blob("images-sm/{name}", FileAccess.Write)] Stream destinationStream,
